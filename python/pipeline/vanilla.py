@@ -70,7 +70,7 @@ if __name__ == "__main__":
 		)
 
 		for experience in generic_scenario.train_stream:
-			cl_strategy.train(experience)
-			results.append(cl_strategy.eval(generic_scenario.test_stream))
+			strategy.train(experience)
+			results.append(strategy.eval(generic_scenario.test_stream))
 
 	print(results)
