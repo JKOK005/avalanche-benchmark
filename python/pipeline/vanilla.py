@@ -74,7 +74,7 @@ if __name__ == "__main__":
 
 		generic_scenario = tensors_benchmark(
 			train_tensors	= [(train_X, train_Y)],
-			test_tensors	= [(test_X, test_Y)],
+			test_tensors	= [],
 			task_labels		= [0],  # Task label of each train exp
 			complete_test_set_only = True
 		)
