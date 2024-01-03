@@ -49,17 +49,20 @@ if __name__ == "__main__":
 		all_test_Y.append(np.array(data[:, 1].tolist()))
 
 	test_X 	= np.concatenate(all_test_X)
-	test_Y 	= np.concatenate(all_test_Y)
-
 	test_X 	= torch.from_numpy(test_X)
+	test_X  = test_X.reshape(test_X.shape[0], 3, 128, 128)
+
+	test_Y 	= np.concatenate(all_test_Y)
 	test_Y 	= torch.from_numpy(test_Y)
 
 	for each_file in sorted(glob.glob(f"{args.train_dir}/*.npy")):
 		data 	= np.load(each_file, allow_pickle = True)
-		train_X = np.array(data[:, 0].tolist())
-		train_Y = np.array(data[:, 1].tolist())
 
+		train_X = np.array(data[:, 0].tolist())
 		train_X = torch.from_numpy(train_X)
+		train_X = train_X.reshape(train_X.shape[0], 3, 128, 128)
+
+		train_Y = np.array(data[:, 1].tolist())
 		train_Y = torch.from_numpy(train_Y)
 
 		generic_scenario = tensors_benchmark(
