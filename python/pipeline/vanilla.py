@@ -68,7 +68,7 @@ if __name__ == "__main__":
 		train_Y = torch.from_numpy(train_Y).type(torch.LongTensor)
 
 		train_X = torch.zeros(train_X.shape[0], 3, 128, 128)
-		train_X = torch.zeros(train_X.shape[0], dtype = torch.long)
+		train_Y = torch.zeros(train_X.shape[0], dtype = torch.long)
 		test_x  = torch.zeros(test_X.shape[0], 3, 128, 128)
 		test_y  = torch.zeros(test_X.shape[0], dtype = torch.long)
 
