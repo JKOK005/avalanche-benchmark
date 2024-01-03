@@ -31,13 +31,13 @@ if __name__ == "__main__":
 
 	model 		= get_vgg_net() if args.net == "vgg" else None
 
-	optimizer 	= Adam(model.parameters(), lr = 5e-5)
+	optimizer 	= Adam(model.parameters(), lr = 1e-4)
 	
 	objective 	= CrossEntropyLoss()
 
 	strategy 	= Naive(
 				    model, optimizer, objective,
-				    train_mb_size = 32, train_epochs = 30, eval_mb_size = 32,
+				    train_mb_size = 16, train_epochs = 30, eval_mb_size = 16,
 				)
 
 	results = []
@@ -75,9 +75,9 @@ if __name__ == "__main__":
 				complete_test_set_only = False
 			)
 
-		for experience in generic_scenario.train_stream:
-			strategy.train(experience)
-			strategy.eval(strategy.test_stream)
+			for experience in generic_scenario.train_stream:
+				strategy.train(experience)
+				strategy.eval(strategy.test_stream)
 
-		results.append(strategy.eval(strategy.test_stream))
+			results.append(strategy.eval(strategy.test_stream))
 	print(results)
