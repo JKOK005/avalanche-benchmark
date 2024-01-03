@@ -19,6 +19,14 @@ python3 pipeline/vanilla.py \
 
 torch.manual_seed(0)
 
+if torch.cuda.is_available():  
+	dev = "cuda:0" 
+else:
+	dev = "cpu"  
+
+print(f"Using device: {dev}")
+device = torch.device(dev)  
+
 def get_vgg_net():
 	return Vgg16(num_classes = 10)
 
