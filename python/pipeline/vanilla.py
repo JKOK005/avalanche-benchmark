@@ -69,8 +69,8 @@ if __name__ == "__main__":
 
 		train_X = torch.zeros(train_X.shape[0], 3, 128, 128)
 		train_Y = torch.zeros(train_X.shape[0], dtype = torch.long)
-		test_x  = torch.zeros(test_X.shape[0], 3, 128, 128)
-		test_y  = torch.zeros(test_X.shape[0], dtype = torch.long)
+		test_X  = torch.zeros(test_X.shape[0], 3, 128, 128)
+		test_Y  = torch.zeros(test_X.shape[0], dtype = torch.long)
 
 		generic_scenario = tensors_benchmark(
 			train_tensors	= [(train_X, train_Y)],
