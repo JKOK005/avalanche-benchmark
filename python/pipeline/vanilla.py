@@ -67,10 +67,10 @@ if __name__ == "__main__":
 		# train_Y = np.array(data[:, 1].tolist())
 		# train_Y = torch.from_numpy(train_Y).type(torch.LongTensor)
 
-		train_X = torch.zeros(train_X.shape[0], 3, 128, 128, requires_grad = False)
-		train_Y = torch.zeros(train_X.shape[0], dtype = torch.long, requires_grad = False)
-		test_X  = torch.zeros(test_X.shape[0], 3, 128, 128, requires_grad = False)
-		test_Y  = torch.zeros(test_X.shape[0], dtype = torch.long, requires_grad = False)
+		train_X = torch.zeros(1000, 3, 128, 128, requires_grad = False)
+		train_Y = torch.zeros(1000, dtype = torch.long, requires_grad = False)
+		test_X  = torch.zeros(100, 3, 128, 128, requires_grad = False)
+		test_Y  = torch.zeros(100, dtype = torch.long, requires_grad = False)
 
 		generic_scenario = tensors_benchmark(
 			train_tensors	= [(train_X, train_Y)],
