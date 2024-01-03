@@ -69,7 +69,7 @@ if __name__ == "__main__":
 
 		with torch.cuda.device(1):
 			generic_scenario = tensors_benchmark(
-				train_tensors	= [(train_X.cuda(), train_Y).cuda()],
+				train_tensors	= [(train_X.cuda(), train_Y.cuda())],
 				test_tensors	= [],
 				task_labels		= [0],  # Task label of each train exp
 				complete_test_set_only = False
