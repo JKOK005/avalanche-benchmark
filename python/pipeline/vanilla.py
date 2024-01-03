@@ -19,6 +19,8 @@ python3 pipeline/vanilla.py \
 
 torch.manual_seed(0)
 
+device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+
 def get_vgg_net():
 	return Vgg16(num_classes = 10)
 
@@ -38,6 +40,7 @@ if __name__ == "__main__":
 	strategy 	= Naive(
 				    model, optimizer, objective,
 				    train_mb_size = 16, train_epochs = 30, eval_mb_size = 16,
+				    device = device,
 				)
 
 	results = []
@@ -67,17 +70,16 @@ if __name__ == "__main__":
 		train_Y = np.array(data[:, 1].tolist())
 		train_Y = torch.from_numpy(train_Y).type(torch.LongTensor)
 
-		with torch.cuda.device(1):
-			generic_scenario = tensors_benchmark(
-				train_tensors	= [(train_X.cuda(), train_Y.cuda())],
-				test_tensors	= [],
-				task_labels		= [0],  # Task label of each train exp
-				complete_test_set_only = False
-			)
+		generic_scenario = tensors_benchmark(
+			train_tensors	= [(train_X.cuda(), train_Y.cuda())],
+			test_tensors	= [],
+			task_labels		= [0],  # Task label of each train exp
+			complete_test_set_only = False
+		)
 
-			for experience in generic_scenario.train_stream:
-				strategy.train(experience)
-				strategy.eval(strategy.test_stream)
+		for experience in generic_scenario.train_stream:
+			strategy.train(experience, num_workers = 4)
+			strategy.eval(strategy.test_stream)
 
-			results.append(strategy.eval(strategy.test_stream))
+		results.append(strategy.eval(strategy.test_stream))
 	print(results)
