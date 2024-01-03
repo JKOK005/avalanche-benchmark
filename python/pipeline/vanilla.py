@@ -30,7 +30,9 @@ if __name__ == "__main__":
 	args 		= parser.parse_args()
 
 	model 		= get_vgg_net() if args.net == "vgg" else None
+
 	optimizer 	= Adam(model.parameters(), lr = 5e-5)
+	
 	objective 	= CrossEntropyLoss()
 
 	strategy 	= Naive(
@@ -61,6 +63,7 @@ if __name__ == "__main__":
 		train_X = np.array(data[:, 0].tolist())
 		train_X = torch.from_numpy(train_X)
 		train_X = train_X.reshape(train_X.shape[0], 3, 128, 128).float()
+		train_X.requires_grad = True
 
 		train_Y = np.array(data[:, 1].tolist())
 		train_Y = torch.from_numpy(train_Y).type(torch.LongTensor)
@@ -74,6 +77,6 @@ if __name__ == "__main__":
 
 		for experience in generic_scenario.train_stream:
 			strategy.train(experience)
-			results.append(strategy.eval(generic_scenario.test_stream))
+			results.append(strategy.eval(strategy.test_stream))
 
 	print(results)
