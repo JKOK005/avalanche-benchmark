@@ -78,7 +78,7 @@ if __name__ == "__main__":
 		)
 
 		for experience in generic_scenario.train_stream:
-			strategy.train(experience, num_workers = 4)
+			strategy.train(experience, num_workers = 1)
 			strategy.eval(strategy.test_stream)
 
 		results.append(strategy.eval(strategy.test_stream))
