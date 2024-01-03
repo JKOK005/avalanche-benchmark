@@ -29,7 +29,7 @@ if __name__ == "__main__":
 	args 		= parser.parse_args()
 
 	model 		= get_vgg_net() if args.net == "vgg" else None
-	optimizer 	= Adam(lr = 5e-5)
+	optimizer 	= Adam(model.parameters(), lr = 5e-5)
 	objective 	= CrossEntropyLoss()
 
 	strategy 	= Naive(
