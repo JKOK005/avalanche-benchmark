@@ -71,8 +71,8 @@ if __name__ == "__main__":
 		train_Y = torch.from_numpy(train_Y).type(torch.LongTensor)
 
 		generic_scenario = tensors_benchmark(
-			train_tensors	= [(train_X.cuda(), train_Y.cuda())],
-			test_tensors	= [],
+			train_tensors	= [(train_X, train_Y)],
+			test_tensors	= [(test_X, test_Y)],
 			task_labels		= [0],  # Task label of each train exp
 			complete_test_set_only = False
 		)
