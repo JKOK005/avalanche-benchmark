@@ -76,7 +76,7 @@ if __name__ == "__main__":
 			train_tensors	= [(train_X, train_Y)],
 			test_tensors	= [],
 			task_labels		= [0],  # Task label of each train exp
-			complete_test_set_only = True
+			complete_test_set_only = False
 		)
 
 		for experience in generic_scenario.train_stream:
