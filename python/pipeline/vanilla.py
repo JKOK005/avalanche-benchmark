@@ -12,8 +12,8 @@ import torch
 """
 python3 pipeline/vanilla.py \
 --net vgg \
---train_path /workspace/jupyter_notebooks/adaptive-stream/data/Core50/save/NI/train/ \
---test_path /workspace/jupyter_notebooks/adaptive-stream/data/Core50/save/NI/test/
+--train_dir /workspace/jupyter_notebooks/adaptive-stream/data/Core50/save/NI/train/ \
+--test_dir /workspace/jupyter_notebooks/adaptive-stream/data/Core50/save/NI/test/
 """
 
 torch.manual_seed(0)
@@ -24,8 +24,8 @@ def get_vgg_net():
 if __name__ == "__main__":
 	parser 		= argparse.ArgumentParser(description='Vanilla model training using Avalanche')
 	parser.add_argument('--net', type = str, nargs = '?', help = 'Type of network')
-	parser.add_argument('--train_path', type = str, nargs = '?', help = 'Path to training CORe50 dataset')
-	parser.add_argument('--test_path', type = str, nargs = '?', help = 'Path to evaluation CORe50 dataset')
+	parser.add_argument('--train_dir', type = str, nargs = '?', help = 'Path to training CORe50 dataset')
+	parser.add_argument('--test_dir', type = str, nargs = '?', help = 'Path to evaluation CORe50 dataset')
 	args 		= parser.parse_args()
 
 	model 		= get_vgg_net() if args.net == "vgg" else None
