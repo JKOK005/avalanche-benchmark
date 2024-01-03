@@ -6,6 +6,7 @@ from avalanche.training.supervised import Naive
 from models.VGG16 import Vgg16
 import argparse
 import glob
+import numpy as np
 import os
 import torch
 
