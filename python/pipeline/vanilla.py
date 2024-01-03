@@ -53,7 +53,7 @@ if __name__ == "__main__":
 	test_X  = test_X.reshape(test_X.shape[0], 3, 128, 128)
 
 	test_Y 	= np.concatenate(all_test_Y)
-	test_Y 	= torch.from_numpy(test_Y).type('torch.long')
+	test_Y 	= torch.from_numpy(test_Y).type(torch.LongTensor)
 
 	print(test_Y)
 
@@ -65,7 +65,7 @@ if __name__ == "__main__":
 		train_X = train_X.reshape(train_X.shape[0], 3, 128, 128)
 
 		train_Y = np.array(data[:, 1].tolist())
-		train_Y = torch.from_numpy(train_Y).type('torch.long')
+		train_Y = torch.from_numpy(train_Y).type(torch.LongTensor)
 		print(train_Y)
 
 		generic_scenario = tensors_benchmark(
