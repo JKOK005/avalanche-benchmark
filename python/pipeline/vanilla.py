@@ -19,14 +19,6 @@ python3 pipeline/vanilla.py \
 
 torch.manual_seed(0)
 
-if torch.cuda.is_available():  
-	dev = "cuda:0" 
-else:
-	dev = "cpu"  
-
-print(f"Using device: {dev}")
-device = torch.device(dev)  
-
 def get_vgg_net():
 	return Vgg16(num_classes = 10)
 
@@ -70,20 +62,22 @@ if __name__ == "__main__":
 
 		train_X = np.array(data[:, 0].tolist())
 		train_X = torch.from_numpy(train_X)
-		train_X = train_X.reshape(train_X.shape[0], 3, 128, 128).float().to(device)
+		train_X = train_X.reshape(train_X.shape[0], 3, 128, 128).float()
 
 		train_Y = np.array(data[:, 1].tolist())
-		train_Y = torch.from_numpy(train_Y).type(torch.LongTensor).to(device)
+		train_Y = torch.from_numpy(train_Y).type(torch.LongTensor)
 
-		generic_scenario = tensors_benchmark(
-			train_tensors	= [(train_X, train_Y)],
-			test_tensors	= [],
-			task_labels		= [0],  # Task label of each train exp
-			complete_test_set_only = False
-		)
+		with torch.cuda.device(1):
+			generic_scenario = tensors_benchmark(
+				train_tensors	= [(train_X.cuda(), train_Y).cuda()],
+				test_tensors	= [],
+				task_labels		= [0],  # Task label of each train exp
+				complete_test_set_only = False
+			)
 
 		for experience in generic_scenario.train_stream:
 			strategy.train(experience)
-			results.append(strategy.eval(strategy.test_stream))
+			strategy.eval(strategy.test_stream)
 
+		results.append(strategy.eval(strategy.test_stream))
 	print(results)
