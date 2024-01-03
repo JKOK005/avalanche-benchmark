@@ -1,4 +1,4 @@
-from torch.optim import Adam
+from torch.optim import Adam, SGD
 from torch.nn import CrossEntropyLoss
 from avalanche.benchmarks.generators import tensors_benchmark
 from avalanche.models import SimpleMLP
@@ -31,7 +31,7 @@ if __name__ == "__main__":
 
 	model 		= get_vgg_net() if args.net == "vgg" else None
 
-	optimizer 	= Adam(model.parameters(), lr = 5e-5)
+	optimizer 	= SGD(model.parameters(), lr = 0.001, momentum=0.9)
 	
 	objective 	= CrossEntropyLoss()
 
@@ -63,7 +63,6 @@ if __name__ == "__main__":
 		train_X = np.array(data[:, 0].tolist())
 		train_X = torch.from_numpy(train_X)
 		train_X = train_X.reshape(train_X.shape[0], 3, 128, 128).float()
-		train_X.requires_grad = True
 
 		train_Y = np.array(data[:, 1].tolist())
 		train_Y = torch.from_numpy(train_Y).type(torch.LongTensor)
