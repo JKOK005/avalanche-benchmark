@@ -3,6 +3,7 @@ from torch.nn import CrossEntropyLoss
 from avalanche.benchmarks.generators import tensors_benchmark
 from avalanche.models import SimpleMLP
 from avalanche.training.supervised import Naive
+from avalanche.training.plugins import EarlyStoppingPlugin
 from models.VGG16 import Vgg16
 import argparse
 import glob
@@ -33,14 +34,18 @@ if __name__ == "__main__":
 
 	model 		= get_vgg_net() if args.net == "vgg" else None
 
-	optimizer 	= Adam(model.parameters(), lr = 1e-4)
+	optimizer 	= Adam(model.parameters(), lr = 5e-5)
 	
 	objective 	= CrossEntropyLoss()
+
+	plugins		= [
+					EarlyStoppingPlugin(patience = 5, val_stream_name = 'train'),
+				]
 
 	strategy 	= Naive(
 				    model, optimizer, objective,
 				    train_mb_size = 16, train_epochs = 30, eval_mb_size = 16,
-				    device = device,
+				    device = device, plugins = plugins,
 				)
 
 	results = []
