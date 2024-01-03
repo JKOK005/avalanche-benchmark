@@ -9,6 +9,13 @@ import glob
 import os
 import torch
 
+"""
+python3 pipeline/vanilla.py \
+--net vgg \
+--train_path /workspace/jupyter_notebooks/adaptive-stream/data/Core50/save/NI/train/ \
+--test_path /workspace/jupyter_notebooks/adaptive-stream/data/Core50/save/NI/test/
+"""
+
 torch.manual_seed(0)
 
 def get_vgg_net():
@@ -19,10 +26,9 @@ if __name__ == "__main__":
 	parser.add_argument('--net', type = str, nargs = '?', help = 'Type of network')
 	parser.add_argument('--train_path', type = str, nargs = '?', help = 'Path to training CORe50 dataset')
 	parser.add_argument('--test_path', type = str, nargs = '?', help = 'Path to evaluation CORe50 dataset')
-	parser.add_argument('--save_path', type = str, nargs = '?', help = 'Save training performance')
 	args 		= parser.parse_args()
 
-	model 		= get_vgg_net()
+	model 		= get_vgg_net() if args.net == "vgg" else None
 	optimizer 	= Adam(lr = 5e-5)
 	objective 	= CrossEntropyLoss()
 
@@ -65,5 +71,5 @@ if __name__ == "__main__":
 		for experience in generic_scenario.train_stream:
 			cl_strategy.train(experience)
 			results.append(cl_strategy.eval(generic_scenario.test_stream))
-			
+
 	print(results)
