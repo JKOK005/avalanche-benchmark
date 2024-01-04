@@ -34,13 +34,13 @@ if __name__ == "__main__":
 
 	model 		= get_vgg_net() if args.net == "vgg" else None
 
-	optimizer 	= Adam(model.parameters(), lr = 1e-6)
+	optimizer 	= Adam(model.parameters(), lr = 1e-5)
 	
 	objective 	= CrossEntropyLoss()
 
 	plugins		= [
 					EarlyStoppingPlugin(patience = 3, val_stream_name = 'train'),
-					LwFPlugin(alpha = 1, temperature = 2)
+					EWCPlugin(ewc_lambda = 0.001)
 				]
 
 	strategy 	= Naive(
