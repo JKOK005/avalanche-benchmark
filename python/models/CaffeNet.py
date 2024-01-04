@@ -28,7 +28,7 @@ class CaffeNet(nn.Module):
 						)
 
 		self.classifier = nn.Sequential(
-							nn.Linear(8192, 4096),
+							nn.Linear(1024, 4096),
 							nn.ReLU(True),
 							nn.Dropout(0.5),
 							nn.Linear(4096, 4096),
