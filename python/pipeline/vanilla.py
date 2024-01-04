@@ -40,7 +40,7 @@ if __name__ == "__main__":
 
 	plugins		= [
 					EarlyStoppingPlugin(patience = 3, val_stream_name = 'train'),
-					EWCPlugin(ewc_lambda = 0.001)
+					GDumbPlugin(mem_size = 2400)
 				]
 
 	strategy 	= Naive(
