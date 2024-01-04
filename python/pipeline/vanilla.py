@@ -40,11 +40,12 @@ if __name__ == "__main__":
 
 	plugins		= [
 					EarlyStoppingPlugin(patience = 3, val_stream_name = 'train'),
+					EWCPlugin(ewc_lambda = 0.001)
 				]
 
 	strategy 	= Naive(
 				    model, optimizer, objective,
-				    train_mb_size = 32, train_epochs = 1, eval_mb_size = 32,
+				    train_mb_size = 32, train_epochs = 30, eval_mb_size = 32,
 				    device = device, plugins = plugins,
 				)
 
