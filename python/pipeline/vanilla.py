@@ -90,12 +90,16 @@ if __name__ == "__main__":
 		complete_test_set_only = False
 	)
 
+	acc = []
 	for experience in generic_scenario.train_stream:
 		strategy.train(experience)
 
-		import IPython
-		IPython.embed()
+		_model 	= model.to(torch.device("cpu"))
+		res 	= _model(test_X)
+		top_K 	= res.topk(1, dim=1)
 		
+		acc.append(torch.sum(top_K.flatten() == test_Y) / len(test_Y))
 		results.append(strategy.eval(generic_scenario.test_stream))
+		print(acc)
 
 	print(results)
