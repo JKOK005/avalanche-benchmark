@@ -37,8 +37,8 @@ class CaffeNet(nn.Module):
 							nn.Linear(4096, num_classes)
 						)
 
-		def forward(self, x):
-			x = self.features(x)
-			x = x.view(x.size(0), -1)
-			x = self.classifier(x)
-			return torch.nn.functional.softmax(x)
+	def forward(self, x):
+		x = self.features(x)
+		x = x.view(x.size(0), -1)
+		x = self.classifier(x)
+		return torch.nn.functional.softmax(x)
