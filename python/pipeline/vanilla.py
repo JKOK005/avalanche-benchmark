@@ -40,7 +40,6 @@ if __name__ == "__main__":
 
 	plugins		= [
 					EarlyStoppingPlugin(patience = 3, val_stream_name = 'train'),
-					GDumbPlugin(mem_size = 2400)
 				]
 
 	strategy 	= Naive(
@@ -51,8 +50,8 @@ if __name__ == "__main__":
 
 	results = []
 
-	all_test_X 	= []
-	all_test_Y 	= []
+	all_train 	= []
+	all_test 	= []
 
 	for each_file in sorted(glob.glob(f"{args.test_dir}/*.npy")):
 		data 	= np.load(each_file, allow_pickle = True)
@@ -66,6 +65,8 @@ if __name__ == "__main__":
 	test_Y 	= np.concatenate(all_test_Y)
 	test_Y 	= torch.from_numpy(test_Y).type(torch.LongTensor)
 
+	all_test.append([test_X, test_Y])
+
 	for each_file in sorted(glob.glob(f"{args.train_dir}/*.npy")):
 		data 	= np.load(each_file, allow_pickle = True)
 
@@ -76,15 +77,17 @@ if __name__ == "__main__":
 		train_Y = np.array(data[:, 1].tolist())
 		train_Y = torch.from_numpy(train_Y).type(torch.LongTensor)
 
-		generic_scenario = tensors_benchmark(
-			train_tensors	= [(train_X, train_Y)],
-			test_tensors	= [(test_X, test_Y)],
-			task_labels		= [0],  # Task label of each train exp
-			complete_test_set_only = False
-		)
+		all_train.append([train_X, train_Y])
 
-		for experience in generic_scenario.train_stream:
-			strategy.train(experience)
-			results.append(strategy.eval(generic_scenario.test_stream))
+	generic_scenario = tensors_benchmark(
+		train_tensors	= all_train,
+		test_tensors	= all_test,
+		task_labels		= [i for i in range(len(all_train))],  # Task label of each train exp
+		complete_test_set_only = False
+	)
 
-		print(results)
+	for experience in generic_scenario.train_stream:
+		strategy.train(experience)
+		results.append(strategy.eval(generic_scenario.test_stream))
+
+	print(results)
