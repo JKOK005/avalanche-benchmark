@@ -45,7 +45,7 @@ if __name__ == "__main__":
 
 	strategy 	= Naive(
 				    model, optimizer, objective,
-				    train_mb_size = 32, train_epochs = 30, eval_mb_size = 32,
+				    train_mb_size = 32, train_epochs = 5, eval_mb_size = 32,
 				    device = device, plugins = plugins,
 				)
 
