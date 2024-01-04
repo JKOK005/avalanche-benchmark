@@ -1,7 +1,7 @@
 import torch
 from torch import nn
 
-class CaffeNet(object):
+class CaffeNet(nn.Module):
 	def __init__(self, num_classes = 10):
 		super(CaffeNet, self).__init__()
 
