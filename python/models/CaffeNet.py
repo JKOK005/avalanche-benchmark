@@ -5,7 +5,7 @@ class CaffeNet(nn.Module):
 	def __init__(self, num_classes = 10):
 		super(CaffeNet, self).__init__()
 
-		self.features = nn.Sequential([
+		self.features = nn.Sequential(
 							nn.Conv2d(3, 96, kernel_size=11, stride=4, padding=0),
 							nn.ReLU(inplace=True),
 							nn.MaxPool2d(kernel_size=3, stride=2),
@@ -25,7 +25,6 @@ class CaffeNet(nn.Module):
 							nn.Conv2d(384, 256, kernel_size=3, padding=1, groups=2),
 							nn.ReLU(inplace=True),
 							nn.MaxPool2d(kernel_size=3, stride=2)
-							]
 						)
 
 		self.classifier = nn.Sequential(
