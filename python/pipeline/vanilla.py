@@ -15,8 +15,8 @@ import torch
 """
 python3 pipeline/vanilla.py \
 --net caffe \
---train_dir /workspace/jupyter_notebooks/adaptive-stream/data/Core50/save/NI/train/ \
---test_dir /workspace/jupyter_notebooks/adaptive-stream/data/Core50/save/NI/test/
+--train_dir /workspace/jupyter_notebooks/adaptive-stream/data/Core50/save/NC/train/ \
+--test_dir /workspace/jupyter_notebooks/adaptive-stream/data/Core50/save/NC/test/
 """
 
 torch.manual_seed(0)
@@ -44,7 +44,7 @@ if __name__ == "__main__":
 
 	plugins		= [
 					EarlyStoppingPlugin(patience = 3, val_stream_name = 'train'),
-					GDumbPlugin(mem_size = 2400)
+					EWCPlugin(ewc_lambda = 0.001)
 				]
 
 	strategy 	= Naive(
