@@ -45,7 +45,7 @@ if __name__ == "__main__":
 
 	strategy 	= Naive(
 				    model, optimizer, objective,
-				    train_mb_size = 32, train_epochs = 2, eval_mb_size = 32,
+				    train_mb_size = 32, train_epochs = 30, eval_mb_size = 32,
 				    device = device, plugins = plugins,
 				)
 
@@ -96,7 +96,7 @@ if __name__ == "__main__":
 
 		_model 	= model.to(torch.device("cpu"))
 		res 	= _model(test_X)
-		top_K 	= res.topk(1, dim=1)
+		_, top_K = res.topk(1, dim=1)
 		
 		acc.append(torch.sum(top_K.flatten() == test_Y) / len(test_Y))
 		results.append(strategy.eval(generic_scenario.test_stream))
