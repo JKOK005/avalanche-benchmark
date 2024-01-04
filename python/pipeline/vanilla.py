@@ -44,6 +44,7 @@ if __name__ == "__main__":
 
 	plugins		= [
 					EarlyStoppingPlugin(patience = 3, val_stream_name = 'train'),
+					LwFPlugin(alpha = 1, temperature = 2)
 				]
 
 	strategy 	= Naive(
