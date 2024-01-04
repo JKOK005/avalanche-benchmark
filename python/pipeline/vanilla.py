@@ -5,6 +5,7 @@ from avalanche.models import SimpleMLP
 from avalanche.training.supervised import Naive
 from avalanche.training.plugins import EarlyStoppingPlugin, LwFPlugin, EWCPlugin, GDumbPlugin
 from models.VGG16 import Vgg16
+from models.CaffeNet import CaffeNet
 import argparse
 import glob
 import numpy as np
@@ -25,6 +26,9 @@ device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 def get_vgg_net():
 	return Vgg16(num_classes = 10)
 
+def get_caffenet():
+	return CaffeNet(num_classes = 10)
+
 if __name__ == "__main__":
 	parser 		= argparse.ArgumentParser(description='Vanilla model training using Avalanche')
 	parser.add_argument('--net', type = str, nargs = '?', help = 'Type of network')
@@ -32,7 +36,7 @@ if __name__ == "__main__":
 	parser.add_argument('--test_dir', type = str, nargs = '?', help = 'Path to evaluation CORe50 dataset')
 	args 		= parser.parse_args()
 
-	model 		= get_vgg_net() if args.net == "vgg" else None
+	model 		= get_vgg_net() if args.net == "vgg" else get_caffenet()
 
 	optimizer 	= Adam(model.parameters(), lr = 1e-5)
 	
