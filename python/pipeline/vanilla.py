@@ -34,7 +34,7 @@ if __name__ == "__main__":
 
 	model 		= get_vgg_net() if args.net == "vgg" else None
 
-	optimizer 	= Adam(model.parameters(), lr = 1e-4)
+	optimizer 	= Adam(model.parameters(), lr = 1e-6)
 	
 	objective 	= CrossEntropyLoss()
 
