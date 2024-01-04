@@ -45,7 +45,7 @@ if __name__ == "__main__":
 
 	strategy 	= Naive(
 				    model, optimizer, objective,
-				    train_mb_size = 32, train_epochs = 30, eval_mb_size = 32,
+				    train_mb_size = 32, train_epochs = 2, eval_mb_size = 32,
 				    device = device, plugins = plugins,
 				)
 
@@ -92,6 +92,10 @@ if __name__ == "__main__":
 
 	for experience in generic_scenario.train_stream:
 		strategy.train(experience)
+
+		import IPython
+		IPython.embed()
+
 		results.append(strategy.eval(generic_scenario.test_stream))
 
 	print(results)
