@@ -3,7 +3,7 @@ from torch.nn import CrossEntropyLoss
 from avalanche.benchmarks.generators import tensors_benchmark
 from avalanche.models import SimpleMLP
 from avalanche.training.supervised import Naive
-from avalanche.training.plugins import EarlyStoppingPlugin, LwFPlugin, EWCPlugin
+from avalanche.training.plugins import EarlyStoppingPlugin, LwFPlugin, EWCPlugin, GDumbPlugin
 from models.VGG16 import Vgg16
 import argparse
 import glob
@@ -40,7 +40,7 @@ if __name__ == "__main__":
 
 	plugins		= [
 					EarlyStoppingPlugin(patience = 3, val_stream_name = 'train'),
-					EWCPlugin(ewc_lambda = 0.001)
+					GDumbPlugin(mem_size = 2400)
 				]
 
 	strategy 	= Naive(
