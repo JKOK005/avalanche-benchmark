@@ -53,6 +53,9 @@ if __name__ == "__main__":
 	all_train 	= []
 	all_test 	= []
 
+	all_test_X 	= []
+	all_test_Y  = []
+
 	for each_file in sorted(glob.glob(f"{args.test_dir}/*.npy")):
 		data 	= np.load(each_file, allow_pickle = True)
 		all_test_X.append(np.array(data[:, 0].tolist()))
