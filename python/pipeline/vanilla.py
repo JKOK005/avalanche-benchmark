@@ -93,7 +93,9 @@ if __name__ == "__main__":
 	for experience in generic_scenario.train_stream:
 		strategy.train(experience)
 
-		print(model(test_X.to(device)))
+		import IPython
+		IPython.embed()
+		
 		results.append(strategy.eval(generic_scenario.test_stream))
 
 	print(results)
